@@ -2,6 +2,9 @@ import os
 
 board_game = [['_','_','_'], ['_','_','_'], ['_','_','_']]
 
+class InvalidInformationException(Exception):
+    pass
+
 def show_board(board_game):
     print("      1    2    3")
     row = 1
@@ -18,9 +21,12 @@ def jogador(letter):
     while True:
         row = int(input("Em qual linha deseja jogar: "))
         col = int(input("Em qual coluna deseja jogar: "))
-        if row >= 1 and row <= 3 and col >= 1 and col <= 3:
-            break
-        else:
+        try:
+            if not (row >= 1 and row <= 3 and col >= 1 and col <= 3):
+                raise InvalidInformationException
+            else:
+                break
+        except InvalidInformationException:
             print("Valores incorretos, tente novamente...")
     os.system('clear')
     return row - 1, col -1 
